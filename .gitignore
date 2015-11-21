@@ -7,16 +7,14 @@ build/*
 
 *.txt
 
-.lock-waf_linux2_build
+*.xml
 
-.lock-waf_darwin_build
+*.pcap
+
+.lock*
 
 .project
 
 .cproject
 
 .directory
-
-.xml
-
-*.pcap

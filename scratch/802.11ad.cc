@@ -17,16 +17,16 @@
 
  Default Network Topology
 
-  WIFI           LTE
+  WIFI
 
-  TX1            TX2
-   |              |
-   |              |
-   AP            enb
-   *              *
-   -              -
-   -              -
-   - - - - ue - - -
+  TX1
+   |
+   |
+   AP
+   *
+   -
+   -
+   - ue
 
 */
 
@@ -51,12 +51,12 @@ NS_LOG_COMPONENT_DEFINE ("debug");
 void PrintLocations (NodeContainer,std::string);
 void PrintAddresses(Ipv4InterfaceContainer,std::string);
 
-
 int main (int argc, char *argv[])
 {
 	double simulationTime			= 3;
 
 	bool verbose 					= true;
+	bool tracing					= false;
 
 	double wifiServerStartTime		= 0.01;
 	double wifiClientStartTime		= 1;
@@ -69,12 +69,15 @@ int main (int argc, char *argv[])
 	uint32_t maxTCPBytes 			= 0;
 	double udpPacketInterval 		= 1;
 
-	bool   useUdp					= false;
+	bool   useUdp					= true;
 
 	bool   useDl					= true;
 	bool   useUl					= false;
 
-	bool   useWIFI					= true;
+	bool   useappWIFI				= true;
+
+	std::string outFile ("debug");
+	std::string p2pWifiRate ("1Gbps");
 
 	CommandLine cmd;
 	cmd.AddValue("simulationTime", "Simulation Time: ", simulationTime);
@@ -91,7 +94,6 @@ int main (int argc, char *argv[])
 	if (verbose)
 		LogComponentEnable("PacketSink", LOG_LEVEL_INFO);
 
-
 	Ptr<ListPositionAllocator> 	positionAlloc 	= CreateObject<ListPositionAllocator> ();
 
 	PointToPointHelper 			p2p;
@@ -99,7 +101,6 @@ int main (int argc, char *argv[])
 	InternetStackHelper 		internet;
 	MobilityHelper 				mobility;
 	Ipv4StaticRoutingHelper 	ipv4RoutingHelper;
-
 
 ///////////////////////////////////////////////////////////
 	NS_LOG_LOGIC ("->Initializing Remote Host WIFI (TX1)...");
@@ -112,7 +113,7 @@ int main (int argc, char *argv[])
 	internet.Install(remoteHostWIFIContainer); //txNodeWifi and wifiApNode
 
 	NS_LOG_LOGIC ("Creating pointToPoint WIFI...");
-	p2p.SetDeviceAttribute ("DataRate", DataRateValue (DataRate ("1Gb/s")));
+	p2p.SetDeviceAttribute ("DataRate", DataRateValue (DataRate (p2pWifiRate)));
 	p2p.SetChannelAttribute ("Delay", StringValue ("2ms"));
 	p2p.SetDeviceAttribute ("Mtu", UintegerValue (1500));
 
@@ -132,7 +133,7 @@ int main (int argc, char *argv[])
 
 	internet.Install(ueNodeContainer);
 
-	Ptr<Node> ueNode 		= ueNodeContainer.Get (0);
+	Ptr<Node> ueNode = ueNodeContainer.Get (0);
 
 //////////////////////////////////////////////////////
 //////////////////////////////////////////////////////
@@ -214,7 +215,7 @@ int main (int argc, char *argv[])
 
     if(useUdp)
     {
-    	if(useWIFI)
+    	if(useappWIFI)
     	{
 			if(useDl)
 			{
@@ -245,7 +246,7 @@ int main (int argc, char *argv[])
     }
     else
     {
-    	if(useWIFI)
+    	if(useappWIFI)
     	{
 			if(useDl)
 			{
@@ -284,7 +285,12 @@ int main (int argc, char *argv[])
 
 	Simulator::Stop (Seconds (simulationTime));
 
-	//phy.EnablePcapAll ("temp", true);
+	if (tracing == true)
+	{
+	  p2p.EnablePcapAll (outFile);
+	  phy.EnablePcap (outFile, wifiApdevice.Get (0));
+	  phy.EnablePcapAll (outFile, true);
+	}
 
 	FlowMonitorHelper flowmon;
 	Ptr<FlowMonitor> monitor = flowmon.InstallAll();
@@ -296,14 +302,14 @@ int main (int argc, char *argv[])
 	PrintLocations(wifiApNode, "Location of WIFI AP");
 	PrintLocations(ueNode, "Location of StatNodes");
 
- 	AnimationInterface anim ("debug_anim.xml");
+	AnimationInterface anim (outFile+"_anim.xml");
  	anim.SetConstantPosition (remoteHostWIFI, 0.0, -20.0);
  	anim.SetConstantPosition (wifiApNode, 0.0, 0.0);
  	anim.SetConstantPosition (ueNode, 15.0, distanceUe);
 
 	Simulator::Run ();
 	monitor->CheckForLostPackets ();
-	monitor->SerializeToXmlFile ("debug_monitor.xml", true, true);
+	monitor->SerializeToXmlFile (outFile+"_monitor.xml", true, true);
 	Simulator::Destroy ();
 
 	return 0;

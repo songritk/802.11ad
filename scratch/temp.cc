@@ -82,7 +82,7 @@ int main (int argc, char *argv[])
 	bool   useAppWIFI				= true;
 	bool   useAppLTE				= false;
 
-	std::string arqSaida ("debug");
+	std::string outFile ("debug");
 	std::string p2pWifiRate ("1Gbps");
 	std::string p2pLteRate ("1Gbps");
 
@@ -177,6 +177,7 @@ int main (int argc, char *argv[])
 
 	Ssid ssid = Ssid ("ns3-wifi");
 
+	//wifi.SetStandard (WIFI_PHY_STANDARD_80211ac);
     wifi.SetStandard (WIFI_PHY_STANDARD_80211ad_OFDM);
     phy.SetChannel (channel.Create ());
 
@@ -495,9 +496,9 @@ int main (int argc, char *argv[])
 
 	if (tracing == true)
 	{
-	  p2p.EnablePcapAll (arqSaida);
-	  phy.EnablePcap (arqSaida, wifiApdevice.Get (0));
-	  phy.EnablePcapAll (arqSaida, true);
+	  p2p.EnablePcapAll (outFile);
+	  phy.EnablePcap (outFile, wifiApdevice.Get (0));
+	  phy.EnablePcapAll (outFile, true);
 	  lteHelper->EnableTraces ();
 	}
 
@@ -516,7 +517,7 @@ int main (int argc, char *argv[])
 	PrintLocations(remoteHostLTE, "Location of LTE Remote Host");
 	PrintLocations(enbNode, "Location of enb");
 
- 	AnimationInterface anim (arqSaida+"_anim.xml");
+ 	AnimationInterface anim (outFile+"_anim.xml");
  	//positions WIFI
  	anim.SetConstantPosition (remoteHostWIFI, 0.0, -20.0);
  	anim.SetConstantPosition (wifiApNode, 0.0, 0.0);
@@ -528,7 +529,7 @@ int main (int argc, char *argv[])
 
 	Simulator::Run ();
 	monitor->CheckForLostPackets ();
-	monitor->SerializeToXmlFile (arqSaida+"_monitor.xml", true, true);
+	monitor->SerializeToXmlFile (outFile+"_monitor.xml", true, true);
 	Simulator::Destroy ();
 
 	return 0;

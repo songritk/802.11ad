@@ -82,7 +82,7 @@ int main (int argc, char *argv[])
 	bool   useAppWIFI				= true;
 	bool   useAppLTE				= false;
 
-	std::string arqSaida ("debug");
+	std::string outFile ("debug");
 	std::string p2pWifiRate ("1Gbps");
 	std::string p2pLteRate ("1Gbps");
 
@@ -169,23 +169,25 @@ int main (int argc, char *argv[])
 /////////////////////////////////////////////////////
 
     //NqosWifiMacHelper 		mac 	= NqosWifiMacHelper::Default (); //802.11a,b,g
-    VhtWifiMacHelper 		mac 	= VhtWifiMacHelper::Default ();
+    //HtWifiMacHelper 		mac 	= HtWifiMacHelper::Default (); //802.11n
+	VhtWifiMacHelper 		mac 	= VhtWifiMacHelper::Default (); //802.11ac/ad
     YansWifiChannelHelper 	channel = YansWifiChannelHelper::Default ();
     YansWifiPhyHelper 		phy 	= YansWifiPhyHelper::Default ();
 	WifiHelper 				wifi 	= WifiHelper::Default ();
 
 	Ssid ssid = Ssid ("ns3-wifi");
 
+	//wifi.SetStandard (WIFI_PHY_STANDARD_80211ac);
     wifi.SetStandard (WIFI_PHY_STANDARD_80211ad_OFDM);
     phy.SetChannel (channel.Create ());
-
-    NetDeviceContainer ueWifiDevice;
-    mac.SetType ("ns3::StaWifiMac", "Ssid", SsidValue (ssid), "ActiveProbing", BooleanValue (false));
-    ueWifiDevice = wifi.Install (phy, mac, ueNode);
 
     NetDeviceContainer wifiApdevice;
     mac.SetType ("ns3::ApWifiMac", "Ssid", SsidValue (ssid));
     wifiApdevice = wifi.Install (phy, mac, wifiApNode);
+
+    NetDeviceContainer ueWifiDevice;
+    mac.SetType ("ns3::StaWifiMac", "Ssid", SsidValue (ssid), "ActiveProbing", BooleanValue (false));
+    ueWifiDevice = wifi.Install (phy, mac, ueNode);
 
 //////////////////////////////////////////////////////
 //////////////////////////////////////////////////////
@@ -220,10 +222,10 @@ int main (int argc, char *argv[])
 /////////////////////////////////////////////////////
 /////////////////////////////////////////////////////
 
-	ipv4.SetBase ("60.1.1.0", "255.255.255.0");
+	ipv4.SetBase ("60.0.0.0", "255.0.0.0");
 	Ipv4InterfaceContainer wifiTxIPInterface = ipv4.Assign (p2pDevicesWIFI);
 
-    ipv4.SetBase ("192.1.1.0", "255.255.255.0");
+    ipv4.SetBase ("192.0.0.0", "255.0.0.0");
     Ipv4InterfaceContainer wifiApInterface 		= ipv4.Assign (wifiApdevice);
     Ipv4InterfaceContainer wifiUeIPInterface 	= ipv4.Assign (ueWifiDevice);
 
@@ -494,9 +496,9 @@ int main (int argc, char *argv[])
 
 	if (tracing == true)
 	{
-	  p2p.EnablePcapAll (arqSaida);
-	  phy.EnablePcap (arqSaida, wifiApdevice.Get (0));
-	  phy.EnablePcapAll (arqSaida, true);
+	  p2p.EnablePcapAll (outFile);
+	  phy.EnablePcap (outFile, wifiApdevice.Get (0));
+	  phy.EnablePcapAll (outFile, true);
 	  lteHelper->EnableTraces ();
 	}
 
@@ -515,7 +517,7 @@ int main (int argc, char *argv[])
 	PrintLocations(remoteHostLTE, "Location of LTE Remote Host");
 	PrintLocations(enbNode, "Location of enb");
 
- 	AnimationInterface anim (arqSaida+"_anim.xml");
+ 	AnimationInterface anim (outFile+"_anim.xml");
  	//positions WIFI
  	anim.SetConstantPosition (remoteHostWIFI, 0.0, -20.0);
  	anim.SetConstantPosition (wifiApNode, 0.0, 0.0);
@@ -527,7 +529,7 @@ int main (int argc, char *argv[])
 
 	Simulator::Run ();
 	monitor->CheckForLostPackets ();
-	monitor->SerializeToXmlFile (arqSaida+"_monitor.xml", true, true);
+	monitor->SerializeToXmlFile (outFile+"_monitor.xml", true, true);
 	Simulator::Destroy ();
 
 	return 0;

@@ -17,16 +17,16 @@
 
  Default Network Topology
 
-  WIFI           LTE
+  WIFI
 
-  TX1            TX2
-   |              |
-   |              |
-   AP            enb
-   *              *
-   -              -
-   -              -
-   - - - - ue - - -
+  TX1
+   |
+   |
+   AP
+   *
+   -
+   -
+   - ue
 
 */
 

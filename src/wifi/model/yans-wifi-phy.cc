@@ -1025,18 +1025,20 @@ YansWifiPhy::Configure80211ad_SC (void)
   m_channelStartingFrequency = 60e3;  //60.000 GHz
   SetChannelWidth (2160); //2160 MHz
 
-  m_deviceRateSet.push_back (WifiPhy::GetVhtMcs1 ());
-  m_deviceRateSet.push_back (WifiPhy::GetVhtMcs2 ());
-  m_deviceRateSet.push_back (WifiPhy::GetVhtMcs3 ());
-  m_deviceRateSet.push_back (WifiPhy::GetVhtMcs4 () );
-  m_deviceRateSet.push_back (WifiPhy::GetVhtMcs5 ());
-  m_deviceRateSet.push_back (WifiPhy::GetVhtMcs6 ());
-  m_deviceRateSet.push_back (WifiPhy::GetVhtMcs7 ());
-  m_deviceRateSet.push_back (WifiPhy::GetVhtMcs8 ());
-  m_deviceRateSet.push_back (WifiPhy::GetVhtMcs9 ());
-  m_deviceRateSet.push_back (WifiPhy::GetVhtMcs10 ());
-  m_deviceRateSet.push_back (WifiPhy::GetVhtMcs11 ());
-  m_deviceRateSet.push_back (WifiPhy::GetVhtMcs12 ());
+  m_deviceRateSet.push_back (WifiPhy::GetOfdmRate24MbpsVHT ());
+
+  m_deviceMcsSet.push_back (WifiPhy::GetVhtMcs1_SC ());
+  m_deviceMcsSet.push_back (WifiPhy::GetVhtMcs2_SC ());
+  m_deviceMcsSet.push_back (WifiPhy::GetVhtMcs3_SC ());
+  m_deviceMcsSet.push_back (WifiPhy::GetVhtMcs4_SC ());
+  m_deviceMcsSet.push_back (WifiPhy::GetVhtMcs5_SC ());
+  m_deviceMcsSet.push_back (WifiPhy::GetVhtMcs6_SC ());
+  m_deviceMcsSet.push_back (WifiPhy::GetVhtMcs7_SC ());
+  m_deviceMcsSet.push_back (WifiPhy::GetVhtMcs8_SC ());
+  m_deviceMcsSet.push_back (WifiPhy::GetVhtMcs9_SC ());
+  m_deviceMcsSet.push_back (WifiPhy::GetVhtMcs10_SC ());
+  m_deviceMcsSet.push_back (WifiPhy::GetVhtMcs11_SC ());
+  m_deviceMcsSet.push_back (WifiPhy::GetVhtMcs12_SC ());
 
   m_bssMembershipSelectorSet.push_back (VHT_PHY);
 }
@@ -1048,20 +1050,20 @@ YansWifiPhy::Configure80211ad_OFDM (void)
   m_channelStartingFrequency = 60e3;  //60.000 GHz
   SetChannelWidth (2160); //2160 MHz
 
-  m_deviceRateSet.push_back (WifiPhy::GetOfdmRate7Gbps ());
+  m_deviceRateSet.push_back (WifiPhy::GetOfdmRate7GbpsVHT ());
 
-  m_deviceMcsSet.push_back (WifiPhy::GetVhtMcs13 ());
-  m_deviceMcsSet.push_back (WifiPhy::GetVhtMcs14 ());
-  m_deviceMcsSet.push_back (WifiPhy::GetVhtMcs15 ());
-  m_deviceMcsSet.push_back (WifiPhy::GetVhtMcs16 ());
-  m_deviceMcsSet.push_back (WifiPhy::GetVhtMcs17 ());
-  m_deviceMcsSet.push_back (WifiPhy::GetVhtMcs18 ());
-  m_deviceMcsSet.push_back (WifiPhy::GetVhtMcs19 ());
-  m_deviceMcsSet.push_back (WifiPhy::GetVhtMcs20 ());
-  m_deviceMcsSet.push_back (WifiPhy::GetVhtMcs21 ());
-  m_deviceMcsSet.push_back (WifiPhy::GetVhtMcs22 ());
-  m_deviceMcsSet.push_back (WifiPhy::GetVhtMcs23 ());
-  m_deviceMcsSet.push_back (WifiPhy::GetVhtMcs24 ());
+  m_deviceMcsSet.push_back (WifiPhy::GetVhtMcs13_OFDM ());
+  m_deviceMcsSet.push_back (WifiPhy::GetVhtMcs14_OFDM ());
+  m_deviceMcsSet.push_back (WifiPhy::GetVhtMcs15_OFDM ());
+  m_deviceMcsSet.push_back (WifiPhy::GetVhtMcs16_OFDM ());
+  m_deviceMcsSet.push_back (WifiPhy::GetVhtMcs17_OFDM ());
+  m_deviceMcsSet.push_back (WifiPhy::GetVhtMcs18_OFDM ());
+  m_deviceMcsSet.push_back (WifiPhy::GetVhtMcs19_OFDM ());
+  m_deviceMcsSet.push_back (WifiPhy::GetVhtMcs20_OFDM ());
+  m_deviceMcsSet.push_back (WifiPhy::GetVhtMcs21_OFDM ());
+  m_deviceMcsSet.push_back (WifiPhy::GetVhtMcs22_OFDM ());
+  m_deviceMcsSet.push_back (WifiPhy::GetVhtMcs23_OFDM ());
+  m_deviceMcsSet.push_back (WifiPhy::GetVhtMcs24_OFDM ());
 
   m_bssMembershipSelectorSet.push_back (VHT_PHY);
 }

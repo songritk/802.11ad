@@ -672,7 +672,13 @@ public:
    *
    * \return a WifiMode for VHT_OFDM at 7Gbit/s
    */
-  static WifiMode GetOfdmRate7Gbps ();
+  static WifiMode GetOfdmRate7GbpsVHT ();
+  /**
+   * Return a WifiMode for VHT_OFDM at 24Mbps
+   *
+   * \return a WifiMode for VHT_OFDM at 24Mbps
+   */
+  static WifiMode GetOfdmRate24MbpsVHT ();
   /**
    * Return a WifiMode for OFDM at 3Mbps with 10MHz channel spacing.
    *
@@ -1023,138 +1029,31 @@ public:
    * \return MCS 9 from VHT MCS values
    */
   static WifiMode GetVhtMcs9 ();
-  /**
-   * Return MCS 10 from VHT MCS values.
-   *
-   * \return MCS 10 from VHT MCS values
-   */
-  static WifiMode GetVhtMcs10 ();
-  /**
-   * Return MCS 11 from VHT MCS values.
-   *
-   * \return MCS 11 from VHT MCS values
-   */
-  static WifiMode GetVhtMcs11();
-  /**
-   * Return MCS 12 from VHT MCS values.
-   *
-   * \return MCS 12 from VHT MCS values
-   */
-  static WifiMode GetVhtMcs12 ();
-  /**
-   * Return MCS 13 from VHT MCS values.
-   *
-   * \return MCS 13 from VHT MCS values
-   */
-  static WifiMode GetVhtMcs13 ();
-  /**
-   * Return MCS 14 from VHT MCS values.
-   *
-   * \return MCS 14 from VHT MCS values
-   */
-  static WifiMode GetVhtMcs14 ();
-  /**
-   * Return MCS 15 from VHT MCS values.
-   *
-   * \return MCS 15 from VHT MCS values
-   */
-  static WifiMode GetVhtMcs15 ();
-  /**
-   * Return MCS 16 from VHT MCS values.
-   *
-   * \return MCS 16 from VHT MCS values
-   */
-  static WifiMode GetVhtMcs16 ();
-  /**
-   * Return MCS 17 from VHT MCS values.
-   *
-   * \return MCS 17 from VHT MCS values
-   */
-  static WifiMode GetVhtMcs17 ();
-  /**
-   * Return MCS 18 from VHT MCS values.
-   *
-   * \return MCS 18 from VHT MCS values
-   */
-  static WifiMode GetVhtMcs18 ();
-  /**
-   * Return MCS 19 from VHT MCS values.
-   *
-   * \return MCS 19 from VHT MCS values
-   */
-  static WifiMode GetVhtMcs19 ();
-  /**
-   * Return MCS 20 from VHT MCS values.
-   *
-   * \return MCS 20 from VHT MCS values
-   */
-  static WifiMode GetVhtMcs20 ();
-  /**
-   * Return MCS 21 from VHT MCS values.
-   *
-   * \return MCS 21 from VHT MCS values
-   */
-  static WifiMode GetVhtMcs21 ();
-  /**
-   * Return MCS 22 from VHT MCS values.
-   *
-   * \return MCS 22 from VHT MCS values
-   */
-  static WifiMode GetVhtMcs22 ();
-  /**
-   * Return MCS 23 from VHT MCS values.
-   *
-   * \return MCS 23 from VHT MCS values
-   */
-  static WifiMode GetVhtMcs23 ();
-  /**
-   * Return MCS 24 from VHT MCS values.
-   *
-   * \return MCS 24 from VHT MCS values
-   */
-  static WifiMode GetVhtMcs24 ();
-  /**
-   * Return MCS 25 from VHT MCS values.
-   *
-   * \return MCS 25 from VHT MCS values
-   */
-  static WifiMode GetVhtMcs25 ();
-  /**
-   * Return MCS 26 from VHT MCS values.
-   *
-   * \return MCS 26 from VHT MCS values
-   */
-  static WifiMode GetVhtMcs26 ();
-  /**
-   * Return MCS 27 from VHT MCS values.
-   *
-   * \return MCS 27 from VHT MCS values
-   */
-  static WifiMode GetVhtMcs27 ();
-  /**
-   * Return MCS 28 from VHT MCS values.
-   *
-   * \return MCS 28 from VHT MCS values
-   */
-  static WifiMode GetVhtMcs28 ();
-  /**
-   * Return MCS 29 from VHT MCS values.
-   *
-   * \return MCS 29 from VHT MCS values
-   */
-  static WifiMode GetVhtMcs29 ();
-  /**
-   * Return MCS 30 from VHT MCS values.
-   *
-   * \return MCS 30 from VHT MCS values
-   */
-  static WifiMode GetVhtMcs30 ();
-  /**
-   * Return MCS 31 from VHT MCS values.
-   *
-   * \return MCS 31 from VHT MCS values
-   */
-  static WifiMode GetVhtMcs31 ();
+
+  static WifiMode GetVhtMcs1_SC ();
+  static WifiMode GetVhtMcs2_SC ();
+  static WifiMode GetVhtMcs3_SC ();
+  static WifiMode GetVhtMcs4_SC ();
+  static WifiMode GetVhtMcs5_SC ();
+  static WifiMode GetVhtMcs6_SC ();
+  static WifiMode GetVhtMcs7_SC ();
+  static WifiMode GetVhtMcs8_SC ();
+  static WifiMode GetVhtMcs9_SC ();
+  static WifiMode GetVhtMcs10_SC ();
+  static WifiMode GetVhtMcs11_SC ();
+  static WifiMode GetVhtMcs12_SC ();
+  static WifiMode GetVhtMcs13_OFDM ();
+  static WifiMode GetVhtMcs14_OFDM ();
+  static WifiMode GetVhtMcs15_OFDM ();
+  static WifiMode GetVhtMcs16_OFDM ();
+  static WifiMode GetVhtMcs17_OFDM ();
+  static WifiMode GetVhtMcs18_OFDM ();
+  static WifiMode GetVhtMcs19_OFDM ();
+  static WifiMode GetVhtMcs20_OFDM ();
+  static WifiMode GetVhtMcs21_OFDM ();
+  static WifiMode GetVhtMcs22_OFDM ();
+  static WifiMode GetVhtMcs23_OFDM ();
+  static WifiMode GetVhtMcs24_OFDM ();
 
   /**
    * Public method used to fire a PhyTxBegin trace.
