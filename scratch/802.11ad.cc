@@ -166,7 +166,7 @@ int main (int argc, char *argv[])
 //    	phy.SetAntenna ("ns3::Measured2DAntenna", "Mode", DoubleValue(10));
 
     int		channelNumber 	= 1;
-    phy.SetErrorRateModel ("ns3::SensitivityModel60GHz");
+    //phy.SetErrorRateModel ("ns3::SensitivityModel60GHz"); missing files <=========== sensitivity-model-60-ghz.cc
     phy.Set("ChannelNumber", UintegerValue(channelNumber));
 
     NetDeviceContainer ueWifiDevice;
