@@ -141,7 +141,7 @@ int main (int argc, char *argv[])
 /////////////////////////////////////////////////////
 /////////////////////////////////////////////////////
 
-    VhtWifiMacHelper 		mac 	= VhtWifiMacHelper::Default ();
+	QosWifiMacHelper 		mac 	= QosWifiMacHelper::Default ();
     YansWifiChannelHelper 	channel = YansWifiChannelHelper::Default ();
     YansWifiPhyHelper 		phy 	= YansWifiPhyHelper::Default ();
 	WifiHelper 				wifi 	= WifiHelper::Default ();
@@ -149,7 +149,25 @@ int main (int argc, char *argv[])
 	Ssid ssid = Ssid ("ns3-wifi");
 
     wifi.SetStandard (WIFI_PHY_STANDARD_80211ad_OFDM);
+    wifi.SetRemoteStationManager ("ns3::IdealWifiManager", "BerThreshold",DoubleValue(1e-9));
+
+    channel.SetPropagationDelay ("ns3::ConstantSpeedPropagationDelayModel");
+    //channel.AddPropagationLoss ("ns3::FriisPropagationLossModel","Lambda", DoubleValue(3e8/60.0e9));
+
+    //mac.SetType ("ns3::60GhzWifiMac");
+    mac.SetBlockAckThresholdForAc(AC_BE, 4);
+    mac.SetMsduAggregatorForAc (AC_BE, "ns3::MsduStandardAggregator", "MaxAmsduSize", UintegerValue (262143));
+
     phy.SetChannel (channel.Create ());
+
+//    if (g_Options.antenna == FW_Antenna_Cone)
+//    	phy.SetAntenna ("ns3::ConeAntenna", "Beamwidth", DoubleValue(ConeAntenna::GainDbiToBeamwidth(0)));
+//    else if (g_Options.antenna == FW_Antenna_Measured)
+//    	phy.SetAntenna ("ns3::Measured2DAntenna", "Mode", DoubleValue(10));
+
+    int		channelNumber 	= 1;
+    phy.SetErrorRateModel ("ns3::SensitivityModel60GHz");
+    phy.Set("ChannelNumber", UintegerValue(channelNumber));
 
     NetDeviceContainer ueWifiDevice;
     mac.SetType ("ns3::StaWifiMac", "Ssid", SsidValue (ssid), "ActiveProbing", BooleanValue (false));
